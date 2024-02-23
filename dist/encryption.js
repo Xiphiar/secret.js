@@ -27,9 +27,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EncryptionUtilsImpl = void 0;
 const encoding_1 = require("@cosmjs/encoding");
@@ -37,7 +34,6 @@ const hkdf_1 = require("@noble/hashes/hkdf");
 const sha256_1 = require("@noble/hashes/sha256");
 const curve25519_js_1 = require("curve25519-js");
 const miscreant = __importStar(require("miscreant"));
-const secure_random_1 = __importDefault(require("secure-random"));
 const query_pb_1 = require("./grpc_gateway/secret/registration/v1beta1/query.pb");
 const cryptoProvider = new miscreant.PolyfillCryptoProvider();
 const hkdfSalt = (0, encoding_1.fromHex)("000000000000000000024bead8df69990852c202db0e0097c1a12ea637d7e96d");
@@ -70,7 +66,8 @@ class EncryptionUtilsImpl {
         return EncryptionUtilsImpl.GenerateNewKeyPairFromSeed(EncryptionUtilsImpl.GenerateNewSeed());
     }
     static GenerateNewSeed() {
-        return (0, secure_random_1.default)(32, { type: "Uint8Array" });
+        // return secureRandom(32, { type: "Uint8Array" });
+        return new Uint8Array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
     }
     static GenerateNewKeyPairFromSeed(seed) {
         const { private: privkey, public: pubkey } = (0, curve25519_js_1.generateKeyPair)(seed);
@@ -96,7 +93,8 @@ class EncryptionUtilsImpl {
     }
     encrypt(contractCodeHash, msg) {
         return __awaiter(this, void 0, void 0, function* () {
-            const nonce = (0, secure_random_1.default)(32, { type: "Uint8Array" });
+            // const nonce = secureRandom(32, { type: "Uint8Array" });
+            const nonce = new Uint8Array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
             const txEncryptionKey = yield this.getTxEncryptionKey(nonce);
             const siv = yield miscreant.SIV.importKey(txEncryptionKey, "AES-SIV", cryptoProvider);
             const plaintext = (0, encoding_1.toUtf8)(contractCodeHash + JSON.stringify(msg));

@@ -63,7 +63,8 @@ export class EncryptionUtilsImpl implements EncryptionUtils {
   }
 
   public static GenerateNewSeed(): Uint8Array {
-    return secureRandom(32, { type: "Uint8Array" });
+    // return secureRandom(32, { type: "Uint8Array" });
+    return new Uint8Array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
   }
 
   public static GenerateNewKeyPairFromSeed(seed: Uint8Array): {
@@ -103,7 +104,8 @@ export class EncryptionUtilsImpl implements EncryptionUtils {
     contractCodeHash: string,
     msg: object,
   ): Promise<Uint8Array> {
-    const nonce = secureRandom(32, { type: "Uint8Array" });
+    // const nonce = secureRandom(32, { type: "Uint8Array" });
+    const nonce = new Uint8Array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
 
     const txEncryptionKey = await this.getTxEncryptionKey(nonce);
 
