@@ -859,7 +859,7 @@ export class SecretNetworkClient {
       auth: new AuthQuerier(options.url),
       authz: new AuthzQuerier(options.url),
       bank: new BankQuerier(options.url),
-      compute: new ComputeQuerier(options.url),
+      compute: new ComputeQuerier(options.url, options.encryptionUtils),
       snip20: new Snip20Querier(options.url),
       snip721: new Snip721Querier(options.url),
       snip1155: new Snip1155Querier(options.url),
