@@ -23,7 +23,7 @@
   "main": "dist/index.js",
   "browser": "dist/browser.js",
   "scripts": {
-    "build": "rm -rf ./dist && webpack && tsc",
+    "build": "rimraf ./dist && webpack && tsc",
     "test": "./test.sh",
     "test-ci": "jest --forceExit --runInBand",
     "gen-docs": "typedoc"
